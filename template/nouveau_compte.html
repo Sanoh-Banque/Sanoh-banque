@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Nouveau compte{% endblock %}
+{% block content %}
+<div class="form-card">
+    <div class="section-title">Créer un nouveau compte</div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Nom du titulaire</label>
+            <input type="text" name="titulaire" placeholder="Ex: Ahmed Sanoh" required>
+        </div>
+        <div class="form-group">
+            <label>Solde initial (DA)</label>
+            <input type="number" name="solde_initial" placeholder="0.00" min="0" step="0.01" value="0">
+        </div>
+        <button type="submit" class="btn">Créer le compte</button>
+    </form>
+</div>
+{% endblock %}

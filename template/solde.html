@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Solde{% endblock %}
+{% block content %}
+{% if compte %}
+<div class="form-card">
+    <div class="section-title">Solde du compte</div>
+    <div style="margin-bottom:16px">
+        <div class="card-label">Numéro</div>
+        <div style="font-size:18px; margin-top:4px">{{ compte.numero }}</div>
+    </div>
+    <div style="margin-bottom:16px">
+        <div class="card-label">Titulaire</div>
+        <div style="font-size:18px; margin-top:4px">{{ compte.titulaire }}</div>
+    </div>
+    <div>
+        <div class="card-label">Solde actuel</div>
+        <div style="font-size:36px; color:var(--gold); font-weight:600; margin-top:8px">{{ "%.2f"|format(compte.solde) }} DA</div>
+    </div>
+</div>
+{% else %}
+<div class="empty">Compte introuvable.</div>
+{% endif %}
+{% endblock %}
+

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Virement{% endblock %}
+{% block content %}
+<div class="form-card">
+    <div class="section-title">Effectuer un virement</div>
+    <form method="POST">
+        <div class="form-group">
+            <label>Compte source</label>
+            <select name="source" required>
+                <option value="">-- Compte émetteur --</option>
+                {% for c in comptes %}
+                <option value="{{ c.numero }}">{{ c.numero }} – {{ c.titulaire }} ({{ "%.2f"|format(c.solde) }} DA)</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Compte destination</label>
+            <select name="destination" required>
+                <option value="">-- Compte bénéficiaire --</option>
+                {% for c in comptes %}
+                <option value="{{ c.numero }}">{{ c.numero }} – {{ c.titulaire }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Montant (DA)</label>
+            <input type="number" name="montant" placeholder="0.00" min="1" step="0.01" required>
+        </div>
+        <button type="submit" class="btn">Virer</button>
+    </form>
+</div>
+{% endblock %}

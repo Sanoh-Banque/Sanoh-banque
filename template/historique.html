@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Historique{% endblock %}
+{% block content %}
+<div class="section-title">Toutes les opérations</div>
+{% if operations %}
+<table>
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Compte</th>
+            <th>Titulaire</th>
+            <th>Type</th>
+            <th>Montant</th>
+            <th>Description</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for op in operations %}
+        <tr>
+            <td style="color:var(--muted)">{{ op.id }}</td>
+            <td>{{ op.compte_numero }}</td>
+            <td>{{ op.titulaire }}</td>
+            <td>
+                {% if 'Dépôt' in op.type or 'reçu' in op.type %}
+                    <span class="badge badge-depot">{{ op.type }}</span>
+                {% elif 'Retrait' in op.type or 'envoyé' in op.type %}
+                    <span class="badge badge-retrait">{{ op.type }}</span>
+                {% else %}
+                    <span class="badge badge-virement">{{ op.type }}</span>
+                {% endif %}
+            </td>
+            <td>{{ "%.2f"|format(op.montant) }} DA</td>
+            <td style="color:var(--muted)">{{ op.description or '–' }}</td>
+            <td>{{ op.date[:16].replace('T', ' ') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty">Aucune opération enregistrée.</div>
+{% endif %}
+{% endblock %}
+

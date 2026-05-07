@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Tableau de bord{% endblock %}
+{% block content %}
+<div class="cards-row">
+    <div class="card">
+        <div class="card-label">Comptes</div>
+        <div class="card-value">{{ comptes|length }}</div>
+    </div>
+    <div class="card">
+        <div class="card-label">Total des fonds</div>
+        <div class="card-value gold">{{ "%.2f"|format(total_fonds) }} DA</div>
+    </div>
+    <div class="card">
+        <div class="card-label">Opérations aujourd'hui</div>
+        <div class="card-value">{{ ops_today }}</div>
+    </div>
+</div>
+
+<div class="section-title">Dernières opérations</div>
+{% if operations %}
+<table>
+    <thead>
+        <tr>
+            <th>Compte</th>
+            <th>Titulaire</th>
+            <th>Type</th>
+            <th>Montant</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for op in operations %}
+        <tr>
+            <td>{{ op.compte_numero }}</td>
+            <td>{{ op.titulaire }}</td>
+            <td>
+                {% if 'Dépôt' in op.type or 'reçu' in op.type %}
+                    <span class="badge badge-depot">{{ op.type }}</span>
+                {% elif 'Retrait' in op.type or 'envoyé' in op.type %}
+                    <span class="badge badge-retrait">{{ op.type }}</span>
+                {% else %}
+                    <span class="badge badge-virement">{{ op.type }}</span>
+                {% endif %}
+            </td>
+            <td>{{ "%.2f"|format(op.montant) }} DA</td>
+            <td>{{ op.date[:16].replace('T', ' ') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="empty">Aucune opération enregistrée.</div>
+{% endif %}
+{% endblock %}
